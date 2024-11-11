@@ -1,0 +1,90 @@
+{
+	"layer": "top",
+	"modules-left": ["cpu","memory","mpd"],
+	"modules-center": [],
+	"modules-right": ["custom/updates","custom/wallpaper","clock","custom/weather","backlight","custom/pipewire", "battery","custom/power"],
+    
+	"network": {
+		"tooltip": false,
+		"format-wifi": "  {essid}",
+		"format-ethernet": ""
+	},
+	"backlight": {
+		"tooltip": false,
+		"format": " {}%",
+		"interval":1,
+        "on-scroll-up": "light -A 5",
+		"on-scroll-down": "light -U 5"
+	},
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon}  {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+	"tray":{
+		"icon-size":18,
+		"spacing": 10
+	},
+    "clock": {
+        "format": "{: %I:%M %p   %d/%m/%Y}"
+    },
+    "cpu": {
+        "interval": 15,
+        "format": " {}%",
+        "max-length": 10
+    },
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "max-length": 10
+    },
+    "mpd": {
+        "format": "{stateIcon} {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})  ",
+        "format-disconnected": "Disconnected ",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "unknown-tag": "N/A",
+        "interval": 2,
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "{title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
+        "tooltip-format-disconnected": "MPD (disconnected)"
+    },
+    "custom/pipewire": {
+		"tooltip": false,
+        "interval": "once",
+        "signal": 8,
+        "exec": "$HOME/.config/scripts/pipewire.sh;",
+        "on-click":"pactl set-sink-mute @DEFAULT_SINK@ toggle; pkill -RTMIN+8 waybar"
+	},
+    "custom/power":{
+        "format": " ",
+        "on-click": "bash ~/.config/rofi/leave/leave.sh"
+    },
+    "custom/updates":{
+        "format": "{} Update(s)",
+        "exec": "checkupdates | wc -l",
+        "exec-if": "[[ $(checkupdates | wc -l) != 0 ]]",
+        "interval": 15,
+        "on-click": "alacritty -e paru -Syu"
+    },
+    "custom/wallpaper":{
+        "format":" ",
+        "on-click": "bash ~/.config/scripts/pkill_bc.sh"
+    },
+    "custom/weather": {
+        "format":"{}",
+        "exec": "bash $HOME/.config/scripts/weather.sh",
+        "interval": 300,
+        "on-click": "firefox https://wttr.in"
+    }
+
+}
